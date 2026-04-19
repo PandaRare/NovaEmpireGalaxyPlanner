@@ -19,17 +19,17 @@
     --text3: #3d6a94;
     --accent: #00c8ff;
     --accent2: #0080cc;
-    --elite: #ff8c00;
-    --elite2: #cc5500;
+    --elite: #00c8ff;
+    --elite2: #006699;
     --standard: #00bfff;
     --standard2: #006699;
     --node-std: #00c8ff;
-    --node-elite: #ff8c00;
+    --node-elite: #00c8ff;
     --node-hover: #ffffff;
     --edge-std: rgba(0,180,255,0.25);
-    --edge-elite: rgba(255,140,0,0.25);
+    --edge-elite: rgba(0,180,255,0.25);
     --glow-std: rgba(0,200,255,0.6);
-    --glow-elite: rgba(255,140,0,0.6);
+    --glow-elite: rgba(0,200,255,0.6);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -87,7 +87,7 @@
   }
   .tab-btn:hover { color: var(--accent); border-color: var(--accent); }
   .tab-btn.active-std { color: var(--standard); border-color: var(--standard); background: rgba(0,180,255,0.08); }
-  .tab-btn.active-elite { color: var(--elite); border-color: var(--elite); background: rgba(255,140,0,0.08); }
+  .tab-btn.active-elite { color: var(--elite); border-color: var(--elite); background: rgba(0,180,255,0.08); }
 
   .stat-pill {
     font-size: 11px;
@@ -163,7 +163,7 @@
   }
   .sys-item:hover { background: var(--panel2); }
   .sys-item.selected { background: rgba(0,180,255,0.1); border-left: 2px solid var(--accent); }
-  .sys-item.selected-elite { background: rgba(255,140,0,0.1); border-left: 2px solid var(--elite); }
+  .sys-item.selected-elite { background: rgba(0,180,255,0.1); border-left: 2px solid var(--elite); }
 
   .sys-dot {
     width: 6px; height: 6px;
@@ -317,7 +317,7 @@
   }
   .ctab:hover { color: var(--text2); border-color: var(--border2); }
   .ctab.active-std { color: var(--standard); border-color: var(--standard); background: rgba(0,180,255,0.07); }
-  .ctab.active-elite { color: var(--elite); border-color: var(--elite); background: rgba(255,140,0,0.07); }
+  .ctab.active-elite { color: var(--elite); border-color: var(--elite); background: rgba(0,180,255,0.07); }
 
   .influence-panel {
     border-top: 1px solid var(--border);
@@ -462,6 +462,117 @@
     border-radius: 2px;
   }
 
+
+  /* ── RESPONSIVE ── */
+  #mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--panel);
+    border-top: 1px solid var(--border2);
+    z-index: 50;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px 4px;
+    gap: 2px;
+  }
+  .mob-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 9px;
+    color: var(--text3);
+    cursor: pointer;
+    padding: 4px 2px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    font-family: 'Share Tech Mono', monospace;
+    transition: color 0.15s;
+  }
+  .mob-btn.active { color: var(--accent); }
+  .mob-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+  #drawer {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--panel);
+    border-top: 1px solid var(--border2);
+    border-radius: 12px 12px 0 0;
+    z-index: 40;
+    max-height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    padding-bottom: env(safe-area-inset-bottom, 60px);
+  }
+  #drawer.open { transform: translateY(0); }
+  .drawer-handle {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .drawer-handle::after {
+    content: '';
+    width: 36px; height: 4px;
+    background: var(--border2);
+    border-radius: 2px;
+  }
+  #drawer-content { padding: 0 0 8px; }
+
+  @media (max-width: 700px) {
+    body { overflow: hidden; }
+    .sidebar { display: none !important; }
+    #mobile-bar { display: flex; }
+    #drawer { display: block; }
+    .canvas-area { height: calc(100vh - 50px - 52px); }
+    header { padding: 6px 10px; }
+    .logo span { display: none; }
+    .logo { font-size: 14px; }
+    .stat-pill { display: none; }
+    .header-controls { gap: 4px; }
+    .tab-btn { font-size: 9px; padding: 4px 8px; }
+    .legend { top: 8px; right: 8px; padding: 7px 10px; font-size: 10px; }
+    .legend-title { font-size: 8px; }
+    .cluster-badge { top: 8px; left: 8px; padding: 5px 10px; }
+    .badge-label { font-size: 8px; }
+    .badge-name { font-size: 11px; }
+    .controls { bottom: 60px; right: 10px; }
+    .canvas-area { height: calc(100dvh - 44px - 52px); }
+  }
+  @media (max-width: 400px) {
+    .tab-btn { font-size: 8px; padding: 3px 5px; letter-spacing: 0; }
+  }
+
+
+  #toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--panel2);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    padding: 8px 18px;
+    border-radius: 4px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
 </style>
 </head>
 <body>
@@ -470,10 +581,10 @@
   <div class="logo">NOVA <span>Galaxy Navigation System</span></div>
   <div class="header-controls">
     <div class="stat-pill" id="node-count">— systems</div>
-    <button class="tab-btn active-std" id="btn-standard" onclick="switchMap('standard')">Standard</button>
-    <button class="tab-btn" id="btn-elite135" onclick="switchMap('elite135')">Elite α</button>
-    <button class="tab-btn" id="btn-elite136" onclick="switchMap('elite136')">Elite β</button>
-    <button class="tab-btn" id="btn-elite137" onclick="switchMap('elite137')">Elite γ</button>
+    <button class="tab-btn active-elite" id="btn-standard" onclick="switchMap('standard')">Elite</button>
+    <button class="tab-btn" id="btn-elite135" onclick="switchMap('elite135')">Standard A</button>
+    <button class="tab-btn" id="btn-elite136" onclick="switchMap('elite136')">Standard B</button>
+    <button class="tab-btn" id="btn-elite137" onclick="switchMap('elite137')">Standard C</button>
   </div>
 </header>
 
@@ -492,7 +603,11 @@
   <div class="influence-panel">
     <div class="inf-header">
       <span>Influence</span>
-      <span id="inf-mode-label" style="color:var(--text2);font-size:9px;letter-spacing:1px">MODE: OFF</span>
+      <div style="display:flex;gap:5px;align-items:center">
+        <span id="inf-mode-label" style="color:var(--text2);font-size:9px;letter-spacing:1px">MODE: OFF</span>
+        <button class="add-btn" onclick="exportData()" style="padding:2px 7px;font-size:9px">↑ Export</button>
+        <button class="add-btn" onclick="openImport()" style="padding:2px 7px;font-size:9px">↓ Import</button>
+      </div>
     </div>
     <div class="inf-controls">
       <div class="sel-alliance-row">
@@ -506,25 +621,19 @@
         <button class="place-btn" id="btn-place-op" onclick="setMode('op')" title="Place Outpost (max 10 per alliance)">◈ Outpost</button>
         <button class="place-btn" id="btn-place-rm" onclick="setMode('rm')" title="Remove building">✕ Remove</button>
       </div>
-      <div class="rank-row">
-        <label>HQ Rank:</label>
-        <select id="hq-rank">
-          <option value="20">Rank 20 (inf 1500)</option>
-          <option value="15">Rank 15 (inf 1200)</option>
-          <option value="10">Rank 10 (inf 950)</option>
-          <option value="5">Rank 5 (inf 700)</option>
-          <option value="1">Rank 1 (inf 500)</option>
-        </select>
+      <div class="rank-row" style="flex-direction:column;align-items:stretch;gap:3px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)">
+          <span>HQ Rank: <span id="hq-rank-val" style="color:var(--text2)">1</span></span>
+          <span id="hq-radius-val" style="color:var(--text3)">r=5.7</span>
+        </div>
+        <input type="range" id="hq-rank" min="1" max="20" value="1" step="1" oninput="updateRankDisplay('hq')">
       </div>
-      <div class="rank-row" style="margin-top:4px">
-        <label>OP Rank:</label>
-        <select id="op-rank">
-          <option value="20">Rank 20 (inf 800)</option>
-          <option value="15">Rank 15 (inf 650)</option>
-          <option value="10">Rank 10 (inf 525)</option>
-          <option value="5">Rank 5 (inf 400)</option>
-          <option value="1">Rank 1 (inf 300)</option>
-        </select>
+      <div class="rank-row" style="flex-direction:column;align-items:stretch;gap:3px;margin-top:4px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)">
+          <span>OP Rank: <span id="op-rank-val" style="color:var(--text2)">1</span></span>
+          <span id="op-radius-val" style="color:var(--text3)">r=5.7</span>
+        </div>
+        <input type="range" id="op-rank" min="1" max="20" value="1" step="1" oninput="updateRankDisplay('op')">
       </div>
     </div>
     <div class="inf-scroll" id="alliance-list"></div>
@@ -536,6 +645,33 @@
     <div class="place-hint" id="place-hint" style="display:none"></div>
   </div>
 
+
+    <div style="border-top:1px solid var(--border);flex-shrink:0">
+      <div class="inf-header" style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+        <span>Pathfinder</span>
+        <span style="color:var(--text3);font-size:9px;letter-spacing:1px">▾</span>
+      </div>
+      <div id="path-panel" style="padding:10px 12px;display:block">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Select systems in list with Shift to set path</div>
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:10px;color:#40cc80;min-width:30px">FROM</span>
+            <span id="path-from-label" style="font-size:11px;color:var(--text);flex:1">—</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:10px;color:#ff8844;min-width:30px">TO</span>
+            <span id="path-to-label" style="font-size:11px;color:var(--text);flex:1">—</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:10px;color:var(--text3);min-width:30px">PATH</span>
+            <span id="path-length" style="font-size:11px;color:#ffdd44"></span>
+          </div>
+        </div>
+        <div id="path-list" style="max-height:120px;overflow-y:auto;scrollbar-width:thin;margin-bottom:6px"></div>
+        <button class="add-btn" onclick="clearPath()" style="width:100%;font-size:10px">Clear path</button>
+      </div>
+    </div>
+
   </div>
 
   <div class="canvas-area" id="canvas-area">
@@ -546,9 +682,13 @@
     </div>
     <div class="legend">
       <div class="legend-title">Legend</div>
-      <div class="legend-row"><div class="legend-dot" style="background:#00c8ff;box-shadow:0 0 4px #00c8ff"></div> Standard system</div>
-      <div class="legend-row"><div class="legend-dot" style="background:#ff8c00;box-shadow:0 0 4px #ff8c00"></div> Elite system</div>
-      <div class="legend-row"><div class="legend-dot" style="background:#ffffff;box-shadow:0 0 6px #ffffff"></div> Selected</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#00c8ff;box-shadow:0 0 4px #00c8ff;width:8px;height:8px"></div> System</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#ffffff;box-shadow:0 0 6px #ffffff;width:8px;height:8px"></div> Selected</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#000;border:1.5px solid #9933ff;box-shadow:0 0 5px #6600cc;width:8px;height:8px;border-radius:50%"></div> Black Hole</div>
+      <div class="legend-row" style="align-items:center">
+        <div style="width:8px;height:8px;background:#00ffee;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);flex-shrink:0;box-shadow:0 0 4px #00ffee"></div>
+        <span style="margin-left:8px">Neutron Star</span>
+      </div>
     </div>
     <div class="controls">
       <button class="ctrl-btn" onclick="zoom(1.3)" title="Zoom in">+</button>
@@ -567,16 +707,17 @@
 const RAW = {"standard":{"nodes":[["Lliope",12.75,-4.763,0],["Yheia",16.5,0.0,0],["Njix",6.75,-28.146,0],["Hi'oika",27.75,-7.361,0],["Namasa",3.0,-18.187,0],["Nvt",8.25,-24.682,0],["Sulux",17.25,-23.816,0],["Hlemxmia",23.25,-6.495,0],["Eris",18.75,-13.423,0],["Tridalis",21.0,-20.785,0],["Latus",25.5,-12.99,0],["Gamede",30.0,-12.99,0],["Webril",27.0,3.464,0],["Jollisto",-26.25,8.227,0],["Sammu",-24.75,1.299,0],["Rhyos",-23.25,4.763,0],["Umtatia",-28.5,4.33,0],["Daione",-31.5,7.794,0],["Dait",-29.25,20.352,0],["Zenidolomonka",-20.25,25.548,0],["Salamoka",-15.0,26.847,0],["Elvoll",-17.25,14.289,0],["Tios",-16.5,20.785,0],["Exemdolas",-34.5,12.124,0],["Vabox",-37.5,8.66,0],["Qulgex",-35.25,4.763,0],["Necmolix",29.25,-23.816,0],["Gjtarwan",10.5,-35.507,0],["Char",-2.25,-30.744,0],["Pala",0.0,-26.847,0],["Patronr",5.25,-21.218,0],["Mithous",11.25,-32.476,0],["Kissam",5.25,-16.021,0],["Wolidiore",6.75,-18.62,0],["Shadur",3.0,-13.856,0],["Metorhalis",10.5,-26.847,0],["Diawozra",14.25,-25.548,0],["Tiorrou",12.75,-29.012,0],["Kimpolum",16.5,-27.713,0],["Alzaor",19.5,-26.847,0],["Bsalim",22.5,-25.115,0],["Cotrly",24.0,-27.713,0],["Jkourpion",14.25,-21.218,0],["Gallisoto",11.25,-19.486,0],["Enceldus",18.0,-18.187,0],["Riton",9.0,-7.794,0],["Urhmdotune",25.5,-15.588,0],["Amnis",24.0,-18.187,0],["Arrnux",24.75,-9.093,0],["Sara Major",24.0,-2.598,0],["Wcolys",27.0,-4.33,0],["Fedinan",29.25,-9.959,0],["Kagallen",36.0,-20.785,0],["Vvottuos",31.5,-20.785,0],["Ourenni",33.75,-24.682,0],["Megellnicx",30.0,-15.588,0],["Zabi",12.75,-37.672,0],["Utotia",15.0,-32.043,0],["Porpens",18.75,-31.61,0],["Wziuicou",21.75,-29.878,0],["Ringsanx",-2.25,-14.289,0],["Xhift",-1.5,-17.321,0],["Ngoium",-5.25,-22.95,0],["Larx",1.5,-23.383,0],["Falye",3.75,-25.548,0],["Hiela",-3.0,-21.651,0],["Hchwassrann",-9.0,-22.517,0],["Rolance",24.75,-22.95,0],["Sekitio",6.0,-10.392,0],["Bolevy",16.5,-10.392,0],["Echectium",19.5,-8.66,0],["Qangrend",21.75,-11.691,0],["Jugscici",21.75,-15.155,0],["Dysianima",16.5,-6.062,0],["Phokos",17.25,-3.031,0],["Deemza",29.25,-18.62,0],["Tethyus",27.0,-25.981,0],["Zione",24.0,-34.641,0],["Gantfallis",27.0,-31.177,0],["Reid",1.5,-29.445,0],["Solos Polusis",-2.25,-24.682,0],["Mitis",33.75,-7.361,0],["Qelraar",30.0,0.866,0],["Amajustum",0.0,36.373,0],["Oprion",4.5,34.641,0],["El'Surrium",-18.75,30.744,0],["Lucekala",-3.75,40.27,0],["Hlux",-26.25,23.816,0],["Ferkeros",-24.0,27.713,0],["Qysnmia",-24.75,31.61,0],["Echswot",6.0,26.847,0],["Cetotuom",9.0,25.115,0],["Clustim",6.75,30.744,0],["Raonus",3.0,22.517,0],["Rxcodra",-24.75,35.94,0],["Adim",-12.0,41.569,0],["Formax",-20.25,17.754,0],["Retirulum",-7.5,43.301,0],["Eridani",-3.75,45.466,0],["Hupolis",-11.25,-4.763,0],["Euriga",-9.0,-0.866,0],["Canis",0.0,6.062,0],["Vella",5.25,8.227,0],["Vulpecula",-15.75,-5.629,0],["Barbosa",-21.0,-5.196,0],["Munimux",-30.0,-1.732,0],["Rediux",-4.5,3.464,0],["Culcopii",9.75,16.021,0],["Culae",13.5,18.187,0],["Trianguilc",-27.75,-9.959,0],["Laraculy",-31.5,-7.794,0],["Ptcient",-33.75,-4.763,0],["Lemy",-33.0,1.732,0],["Uranonetia",-17.25,9.959,0],["Dotman",-13.5,7.794,0],["Sobiescianum",-15.0,0.0,0],["Ceveulius",-19.5,1.732,0],["Minor Pulis",-39.0,14.722,0],["Ponoceros",-37.5,19.919,0],["Octus",-33.75,25.548,0],["Tulux",-30.75,30.744,0],["Keyserium",-10.5,3.464,0],["Risentum",-6.75,7.361,0],["Plancios",2.25,12.557,0],["Falaille",15.75,22.95,0],["Norneen",12.75,32.476,0],["Nanisim",12.0,37.239,0],["Phextor",7.5,39.837,0],["Cuxtans",-2.25,33.342,0],["Oerpens",-5.25,11.691,0],["Talumini",-1.5,14.722,0],["Hynix",-9.75,11.691,0],["Carlai",-12.0,16.454,0],["Venaticici",-11.25,20.352,0],["Parricos",-32.25,16.887,0],["Berenices",-21.75,10.825,0],["Bam",-27.75,13.423,0],["Lacernus",-23.25,15.155,0],["Ophces",1.5,18.187,0],["Cane",-3.75,18.62,0],["Kane",-1.5,23.383,0],["Janislemy",-9.0,38.105,0],["Juddis",-14.25,35.074,0],["Doroda",-39.0,-3.464,0],["Muridani",-42.0,0.866,0],["Cygni",-42.0,6.928,0],["Curuphini",-43.5,12.124,0],["Karaille",5.25,44.6,0],["Yeminorum",0.75,42.002,0],["Iupi",-18.0,38.105,0],["Indritria",-21.75,-9.959,0],["Iologii",-15.0,-9.526,0],["Leonistar",7.5,20.785,0],["Lyum",-4.5,30.311,0],["Micpane",0.0,28.579,0],["Lirae",-24.0,-2.598,0],["Jemini",15.0,27.713,0],["Porologium",13.5,11.258,0],["Kaceta",9.75,12.557,0],["Cadda",12.75,-9.959,0],["Feggoum",10.5,-12.99,0],["Falom",-6.75,-17.754,0],["Fairattr",-14.25,-24.682,0],["Lar",-13.5,-28.579,0],["Lpnius",-8.25,-27.28,0],["Gakkusanix",-6.0,-31.177,0],["Benm",-3.0,-35.507,0],["Mucs",3.0,-39.837,0],["Oritan",9.75,-42.002,0],["Umenga",3.0,-32.909,0],["Mayalium",7.5,-33.775,0],["Quxpool",18.75,-37.672,0],["Kanis",33.0,-29.445,0],["Ragittarius",-13.5,-19.053,0],["Ceptania",-9.75,-14.289,0],["Qill",33.75,-3.031,0],["Dasdum",39.0,-13.856,0],["Sallimote",34.5,-16.454,0],["Virgo",36.75,-9.959,0],["Tellameda",21.0,4.33,0],["Jeticia",21.75,0.433,0],["Parason",9.75,-16.021,0],["Eral",13.5,-23.383,0],["Cumgunnia",9.75,-22.084,0],["Moda",-6.75,22.084,0],["Orlan",-8.25,26.414,0],["Omens",-4.5,-7.794,2],["Vocans",-2.25,-3.897,1],["Hellum",2.25,-0.433,1],["Eskolas",9.0,2.598,2],["Piswoluz",2.25,-3.897,1],["Qigasi",6.75,-0.433,1],["Hagellnic",-19.5,6.062,2],["Talumax",-24.75,20.352,1],["Ha'ki",-9.75,30.744,2],["Jircini",-8.25,15.155,1],["Korvus",0.0,-20.785,1],["Dimmpanium",9.0,-30.311,2],["Euorpolis",26.25,-20.352,1],["Welniam",20.25,-4.763,2],["100_5_2",-33.75,36.806,0]],"edges":[[63,196],[163,164],[99,100],[55,75],[52,177],[164,165],[70,73],[101,106],[11,51],[159,160],[128,154],[109,150],[40,41],[82,175],[101,188],[4,30],[94,149],[132,133],[69,159],[13,17],[18,193],[60,174],[73,74],[21,137],[23,134],[95,141],[188,189],[67,198],[176,178],[14,15],[1,179],[129,130],[26,53],[5,30],[4,32],[93,152],[166,167],[34,60],[42,43],[35,37],[90,92],[105,111],[107,108],[104,155],[153,185],[153,194],[162,163],[11,55],[38,39],[144,145],[103,104],[21,96],[0,73],[54,172],[115,121],[114,131],[1,74],[84,127],[16,17],[71,72],[89,120],[136,137],[133,184],[27,56],[53,75],[18,87],[118,119],[173,174],[77,78],[83,128],[6,36],[93,138],[49,50],[22,96],[169,170],[41,76],[109,110],[131,195],[27,31],[124,156],[189,191],[113,135],[61,161],[110,111],[107,158],[7,199],[9,44],[147,148],[79,169],[46,47],[47,198],[157,189],[23,24],[143,144],[24,117],[83,84],[138,139],[115,116],[49,180],[81,178],[19,20],[77,171],[113,192],[123,138],[24,25],[98,148],[3,51],[100,121],[36,182],[29,79],[66,162],[117,146],[20,85],[23,136],[95,97],[57,58],[167,168],[7,48],[51,81],[186,190],[19,22],[127,147],[78,172],[90,91],[145,146],[32,34],[34,68],[45,68],[0,45],[99,103],[31,197],[182,183],[141,142],[151,186],[113,114],[26,54],[130,139],[19,88],[46,72],[56,171],[119,120],[162,173],[103,151],[60,61],[84,92],[111,143],[6,9],[87,88],[135,137],[97,98],[89,94],[81,175],[91,152],[179,189],[18,134],[40,67],[8,44],[140,154],[174,186],[12,179],[95,149],[41,59],[126,127],[107,123],[121,122],[176,177],[33,183],[16,112],[153,154],[186,187],[132,195],[83,86],[125,156],[65,80],[117,118],[31,57],[170,197],[3,50],[20,194],[58,59],[66,161],[35,36],[10,46],[150,151],[108,124],[116,192],[1,180],[28,79],[187,188],[2,5],[45,159],[0,191],[105,155],[56,168],[62,65],[63,64],[32,33],[9,47],[29,80],[42,44],[165,166],[105,112],[52,54],[86,141],[10,48],[12,82],[101,102],[8,69],[10,11],[99,187],[37,38],[14,155],[68,190],[85,142],[100,106],[102,158],[157,158],[184,185],[139,140],[160,181],[70,71],[125,126],[190,191],[43,181],[25,112],[39,40],[62,161],[96,193],[2,64],[74,199],[65,196],[122,129],[5,35],[85,89],[13,15],[28,165],[26,76]]},"elite135":{"nodes":[["Enceldus",-6.75,3.897,0],["Riton",-9.0,3.464,0],["Urhmdotune",-7.5,1.732,0],["Amnis",-9.0,0.866,0],["Arrnux",-6.0,-0.866,0],["Sara Major",-9.0,-1.732,0],["Wcolys",-12.0,-0.866,0],["Fedinan",-11.25,-3.897,0],["Kagallen",-8.25,-3.897,0],["Vvottuos",-14.25,-3.031,0],["Ourenni",-12.75,-6.495,0],["Megellnicx",-11.25,-8.227,0],["Zabi",-6.0,-7.794,0],["Utotia",-12.75,-9.093,0],["Porpens",-12.0,-12.99,0],["Wziuicou",-11.25,-15.155,0],["Ringsanx",-9.0,-12.99,0],["Xhift",-6.75,-16.021,0],["Ngoium",-7.5,-19.919,0],["Larx",-2.25,-18.62,0],["Falye",0.0,-17.321,0],["Hiela",4.5,-17.321,0],["Hchwassrann",0.75,-22.084,0],["Rolance",6.75,-18.62,0],["Sekitio",5.25,-21.218,0],["Bolevy",12.0,-19.919,0],["Echectium",4.5,-9.526,0],["Qangrend",7.5,-6.062,0],["Jugscici",15.0,-14.722,0],["Dysianima",16.5,-19.053,0],["Phokos",19.5,-12.99,0],["Deemza",22.5,-17.321,0],["Tethyus",16.5,-21.651,0],["Zione",24.75,-16.887,0],["Gantfallis",24.0,-11.258,0],["Reid",28.5,-7.794,0],["Solos Polusis",34.5,-2.598,0],["Mitis",24.75,0.433,0],["Qelraar",26.25,-2.165,0],["Amajustum",21.75,-4.763,0],["Oprion",23.25,6.495,0],["El'Surrium",24.0,8.66,0],["Lucekala",23.25,10.825,0],["Hlux",24.75,10.825,0],["Ferkeros",23.25,16.021,0],["Qysnmia",22.5,19.919,0],["Echswot",16.5,24.249,0],["Cetotuom",15.75,28.146,0],["Clustim",12.75,29.012,0],["Raonus",9.0,31.177,0],["Rxcodra",11.25,32.476,0],["Adim",4.5,33.775,0],["Formax",1.5,34.641,0],["Retirulum",-0.75,35.94,0],["Eridani",-1.5,33.775,0],["Hupolis",-3.0,37.239,0],["Euriga",-8.25,30.744,0],["Canis",-10.5,30.311,0],["Vella",-10.5,28.579,0],["Vocans",-3.75,29.878,0],["Vulpecula",6.75,26.414,0],["Hellum",4.5,26.847,0],["Barbosa",3.75,22.084,0],["Munimux",20.25,23.816,0],["Rediux",18.75,25.548,0],["Culcopii",17.25,29.012,0],["Culae",14.25,25.548,0],["Trianguilc",24.75,16.887,0],["Laraculy",21.75,12.557,0],["Ptcient",26.25,3.031,0],["Lemy",21.0,0.866,0],["Uranonetia",18.75,-9.093,0],["Dotman",28.5,-12.99,0],["Sobiescianum",19.5,-14.722,0],["Ceveulius",21.75,-10.825,0],["Minor Pulis",15.0,-16.454,0],["Ponoceros",6.75,-20.352,0],["Octus",3.75,-22.95,0],["Tulux",3.0,-12.99,0],["Keyserium",12.75,-10.825,0],["Risentum",12.0,-12.99,0],["Plancios",-3.75,-23.816,0],["Falaille",-3.75,-22.084,0],["Norneen",-8.25,-29.012,0],["Nanisim",-8.25,-33.342,0],["Phextor",7.5,-37.239,0],["Cuxtans",0.75,-33.342,0],["Oerpens",0.0,-38.105,0],["Piswoluz",-12.75,-29.878,0],["Qigasi",-20.25,-27.28,0],["Talumax",-21.0,-29.445,0],["Talumini",-22.5,-26.847,0],["Hynix",-18.75,-24.682,0],["Carlai",-22.5,-21.651,0],["Venaticici",-25.5,-19.919,0],["Parricos",-22.5,-18.187,0],["Berenices",-17.25,-16.021,0],["Bam",-18.75,-14.289,0],["Lacernus",-25.5,-15.588,0],["Ophces",-29.25,-16.021,0],["Cane",-27.0,-10.392,0],["Kane",-29.25,-9.093,0],["Janislemy",-23.25,-6.495,0],["Juddis",-22.5,-4.33,0],["Jircini",-31.5,-4.33,0],["Doroda",-24.75,-2.165,0],["Korvus",-27.75,0.433,0],["Euorpolis",-32.25,-1.299,0],["Muridani",-33.0,0.0,0],["Cygni",-33.0,-5.196,0],["Curuphini",-28.5,2.598,0],["Karaille",-29.25,5.629,0],["Yeminorum",-26.25,9.093,0],["Iupi",-28.5,8.66,0],["Indritria",-26.25,6.495,0],["Iologii",-32.25,7.361,0],["Leonistar",-29.25,12.557,0],["Lyum",-21.75,11.691,0],["Omens",-23.25,12.557,0],["Micpane",-20.25,16.021,0],["Lirae",-19.5,19.919,1],["Jemini",-14.25,22.084,0],["Porologium",-12.75,18.62,0],["Kaceta",-11.25,14.289,0],["Cadda",-13.5,12.99,1],["Feggoum",-8.25,10.825,0],["Falom",-6.0,6.928,0],["Fairattr",-8.25,22.95,0],["Lar",-11.25,20.352,0],["Eskolas",-7.5,19.919,0],["Lpnius",-9.0,17.321,0],["Gakkusanix",-3.75,21.218,0],["Benm",-3.0,18.187,0],["Mucs",-1.5,15.588,0],["Oritan",0.75,20.352,0],["Umenga",5.25,16.021,0],["Mayalium",0.75,13.423,0],["Quxpool",-3.75,10.825,0],["Kanis",-12.0,7.794,0],["Ragittarius",0.75,9.959,0],["Hagellnic",11.25,13.423,0],["Ceptania",14.25,9.959,0],["Qill",9.0,12.124,0],["Dasdum",6.75,12.557,0],["Sallimote",6.0,9.526,0],["Virgo",11.25,5.629,0],["Tellameda",15.75,8.227,0],["Jeticia",13.5,1.732,0],["Parason",15.0,-0.866,0],["Eral",11.25,-1.299,0],["Cumgunnia",-18.75,7.361,0],["Ha'ki",-16.5,5.196,0],["Dimmpanium",-14.25,3.031,0],["Welniam",-22.5,-0.866,0],["Moda",-4.5,-9.526,0],["Orlan",-4.5,-12.99,0],["Skylett",-5.25,-5.629,0],["Seyfei",-9.0,-9.526,0],["Malin",3.75,19.486,0],["Vegeo",0.0,16.454,0],["Sessier",-12.0,11.258,0],["Ariangu",-6.0,12.99,0],["Nilx",-0.75,12.557,0],["Zarh",3.75,11.691,0],["Ozpor",8.25,7.361,1],["Zedio",4.5,-6.928,0],["Jetrich",7.5,-8.66,0],["Kersanis",-11.25,4.763,0],["Bernarc",-16.5,10.392,0],["Cyhus",-26.25,17.754,0],["Kotion",-30.75,21.218,0],["Lolipupos",-27.75,22.084,0],["Massa",-30.75,23.816,0],["Mestu",-35.25,3.031,0],["Qaqitarius",-32.25,-13.423,0],["Hydra",-28.5,-21.651,0],["Gem",-24.75,-24.682,0],["Spritium",-19.5,-20.785,0],["Gnus",-7.5,-12.124,0],["Hubble",-16.5,-8.66,2],["Cammlisam",-15.75,-12.557,0],["Molisam",-1.5,23.383,0],["Eucatium",11.25,-7.361,0],["Lar",25.5,-6.062,0],["Kam",23.25,-14.289,0],["Hum",12.0,-24.249,0],["Lacpulalis",32.25,-0.433,0],["Fordol",34.5,5.196,0],["Ballis",27.75,12.557,0],["Meer",1.5,-12.124,0],["Neo",1.5,-8.66,0],["Wumtiys",9.75,9.093,2],["Garbridge",-7.5,14.722,2],["Cepeland",-6.75,28.146,0],["Lick",-18.75,18.62,0],["Pom",-18.75,-0.433,0],["Eil",-15.0,-0.866,0],["Eacaoum",-18.75,4.763,0],["Vetum",-26.25,-3.897,0],["Jalhon",-30.0,0.0,0]],"edges":[[92,177],[18,81],[25,32],[44,45],[99,100],[58,193],[142,144],[13,179],[30,73],[105,198],[139,163],[19,82],[43,67],[46,66],[134,158],[62,181],[132,133],[143,163],[35,72],[120,122],[7,10],[55,59],[96,97],[138,167],[18,83],[69,186],[78,189],[135,140],[42,68],[33,184],[170,171],[112,114],[129,130],[142,164],[48,65],[156,190],[38,183],[68,141],[26,190],[15,16],[40,70],[53,55],[47,48],[6,196],[42,43],[39,74],[106,198],[107,108],[47,66],[27,182],[101,174],[31,33],[48,49],[127,193],[9,195],[12,157],[121,128],[123,125],[140,141],[94,98],[24,76],[103,195],[15,18],[155,178],[16,17],[81,82],[25,29],[145,149],[119,194],[36,187],[108,173],[118,119],[60,62],[127,131],[28,73],[0,2],[49,50],[46,63],[169,170],[122,128],[103,179],[133,159],[13,14],[151,152],[45,46],[93,95],[110,111],[71,74],[50,51],[34,183],[147,148],[93,177],[51,52],[1,167],[37,69],[84,86],[23,24],[28,75],[139,162],[143,144],[104,107],[41,188],[32,185],[83,84],[126,137],[49,61],[115,116],[150,168],[165,190],[135,158],[175,176],[72,184],[79,80],[56,57],[118,169],[171,172],[17,178],[20,21],[136,159],[99,174],[84,88],[40,42],[95,97],[112,113],[89,90],[104,109],[44,67],[132,134],[1,126],[19,22],[26,189],[53,54],[124,160],[39,183],[56,59],[90,91],[145,146],[150,197],[20,78],[14,16],[86,87],[129,131],[89,92],[12,156],[121,127],[151,195],[30,79],[138,152],[125,161],[64,65],[27,165],[11,157],[36,186],[22,77],[60,61],[130,132],[151,197],[164,191],[27,149],[25,76],[148,149],[88,89],[38,70],[161,192],[116,169],[166,182],[94,175],[120,194],[103,153],[141,146],[13,180],[70,147],[2,3],[122,123],[100,102],[105,153],[117,118],[137,139],[154,155],[31,75],[3,4],[41,43],[160,168],[35,36],[96,180],[101,109],[8,12],[187,188],[133,162],[145,191],[63,64],[56,58],[154,157],[20,77],[106,199],[4,5],[52,54],[123,160],[133,192],[95,98],[110,199],[132,181],[0,1],[10,11],[117,168],[9,196],[108,199],[37,38],[85,87],[102,103],[94,99],[6,7],[111,115],[91,176],[114,150],[21,23],[34,72],[125,126],[135,136],[5,8],[113,115],[30,71],[80,166],[29,75]]},"elite136":{"nodes":[["Jkourpion",-8.25,0.433,0],["Gallisoto",-6.0,-2.598,0],["Enceldus",-7.5,-3.464,0],["Riton",-3.0,-6.062,0],["Urhmdotune",2.25,-8.227,0],["Amnis",8.25,-7.361,0],["Arrnux",6.75,-6.495,0],["Sara Major",2.25,-11.691,0],["Wcolys",12.0,-2.598,0],["Fedinan",10.5,-1.732,0],["Kagallen",10.5,6.062,0],["Vvottuos",8.25,4.763,0],["Ourenni",3.75,9.959,0],["Megellnicx",3.75,8.227,0],["Zabi",-2.25,9.959,0],["Utotia",-2.25,7.361,0],["Porpens",-7.5,5.196,0],["Wziuicou",-6.75,3.897,0],["Ringsanx",-6.75,11.691,0],["Xhift",-7.5,8.66,0],["Ngoium",-14.25,12.557,0],["Larx",-11.25,15.155,0],["Falye",5.25,12.557,0],["Hiela",1.5,12.124,0],["Hchwassrann",1.5,14.722,0],["Rolance",-1.5,19.919,0],["Sekitio",1.5,20.785,0],["Bolevy",-1.5,23.383,0],["Echectium",-6.0,19.053,0],["Qangrend",-8.25,20.352,0],["Jugscici",-7.5,22.517,0],["Dysianima",-14.25,20.352,0],["Phokos",-7.5,17.321,0],["Deemza",-3.75,12.557,0],["Tethyus",14.25,8.227,0],["Zione",12.0,9.526,0],["Gantfallis",4.5,16.454,0],["Reid",4.5,20.785,0],["Solos Polusis",6.0,15.588,0],["Mitis",4.5,26.847,0],["Qelraar",8.25,24.682,0],["Amajustum",-17.25,22.95,0],["Oprion",-19.5,19.053,0],["El'Surrium",-16.5,17.321,0],["Lucekala",-21.75,14.289,0],["Hlux",-18.75,12.557,0],["Ferkeros",-18.0,14.722,0],["Qysnmia",-21.75,21.218,0],["Echswot",-25.5,14.722,0],["Cetotuom",-27.75,17.754,0],["Clustim",-30.0,12.99,0],["Raonus",-30.75,22.084,0],["Rxcodra",-26.25,12.557,0],["Adim",-27.0,9.526,0],["Formax",-29.25,9.093,0],["Retirulum",-29.25,5.629,0],["Eridani",-32.25,7.361,0],["Hupolis",-34.5,3.464,0],["Euriga",-30.0,3.464,0],["Canis",-24.75,8.227,0],["Vella",-24.0,11.258,0],["Vocans",-26.25,1.299,0],["Vulpecula",-27.75,-1.299,0],["Hellum",-31.5,-3.464,0],["Barbosa",-28.5,-8.66,0],["Munimux",-25.5,-6.928,0],["Rediux",-23.25,-3.031,0],["Culcopii",-22.5,-0.866,0],["Culae",-21.0,-4.33,0],["Trianguilc",-18.75,-2.165,0],["Laraculy",-18.75,-0.433,0],["Ptcient",-15.0,-0.866,0],["Lemy",-20.25,7.361,0],["Uranonetia",-17.25,6.495,0],["Dotman",-21.0,6.062,0],["Sobiescianum",-17.25,9.959,0],["Ceveulius",-14.25,9.093,0],["Minor Pulis",-12.0,0.866,0],["Ponoceros",-10.5,2.598,0],["Octus",-15.75,-4.763,0],["Tulux",-18.75,-7.361,0],["Keyserium",-12.75,-9.093,0],["Risentum",-10.5,-7.794,0],["Plancios",-24.75,-10.825,0],["Falaille",-28.5,-13.856,0],["Norneen",-26.25,-15.155,0],["Nanisim",-27.75,-18.62,0],["Phextor",-21.75,-18.62,0],["Cuxtans",-22.5,-21.651,0],["Oerpens",-18.75,-13.423,0],["Piswoluz",-15.75,-16.021,0],["Qigasi",-20.25,-28.146,0],["Talumax",-17.25,-25.548,0],["Talumini",-9.75,-29.878,0],["Hynix",-11.25,-31.61,0],["Carlai",-4.5,-33.775,0],["Venaticici",-15.75,-11.691,0],["Parricos",-10.5,-15.588,0],["Berenices",-12.0,-18.187,0],["Bam",-6.75,-7.361,0],["Lacernus",-8.25,-10.825,0],["Ophces",-6.0,-12.99,0],["Cane",-6.0,-16.454,0],["Kane",-1.5,-15.588,0],["Janislemy",0.75,-14.289,0],["Juddis",3.75,-12.557,0],["Jircini",2.25,-18.62,0],["Doroda",-2.25,-21.218,0],["Korvus",2.25,-24.682,0],["Euorpolis",6.75,-21.218,0],["Muridani",3.75,-15.155,0],["Cygni",-32.25,-0.433,0],["Curuphini",-19.5,3.464,0],["Karaille",-16.5,3.464,0],["Yeminorum",-4.5,-9.526,0],["Iupi",-0.75,-9.093,0],["Indritria",-12.0,-5.196,0],["Iologii",8.25,-23.816,0],["Leonistar",6.75,-18.62,0],["Lyum",9.75,-16.887,0],["Omens",10.5,-18.187,0],["Micpane",12.0,-12.99,0],["Lirae",14.25,-16.887,1],["Jemini",13.5,-14.722,0],["Porologium",9.75,-13.423,0],["Kaceta",16.5,-23.383,0],["Cadda",21.0,-19.919,1],["Feggoum",22.5,-17.321,0],["Falom",16.5,-20.785,0],["Fairattr",18.75,-18.62,0],["Lar",19.5,-12.99,0],["Eskolas",19.5,-15.588,0],["Lpnius",17.25,-10.825,0],["Gakkusanix",18.75,-8.227,0],["Benm",15.0,-9.526,0],["Mucs",10.5,-6.062,0],["Oritan",14.25,-3.031,0],["Umenga",23.25,-19.486,0],["Mayalium",26.25,-16.887,0],["Quxpool",30.0,-16.454,0],["Kanis",21.0,-4.33,0],["Ragittarius",24.0,-8.66,0],["Hagellnic",24.0,-2.598,0],["Ceptania",21.0,-0.866,0],["Qill",18.0,-2.598,0],["Dasdum",14.25,-0.433,0],["Sallimote",12.0,-23.383,0],["Virgo",-3.75,-23.816,0],["Tellameda",-6.75,-22.084,0],["Jeticia",-5.25,-19.486,0],["Parason",-21.75,10.825,0],["Eral",-0.75,13.423,0],["Cumgunnia",2.25,-21.218,0],["Ha'ki",27.75,-11.691,0],["Dimmpanium",33.75,-7.361,0],["Welniam",29.25,-5.629,0],["Moda",34.5,-0.866,0],["Orlan",26.25,-2.165,0],["Skylett",24.0,0.866,0],["Seyfei",27.0,0.866,0],["Malin",21.0,2.598,0],["Vegeo",27.0,3.464,0],["Sessier",22.5,5.196,0],["Ariangu",23.25,10.825,0],["Nilx",24.0,6.062,0],["Zarh",27.0,7.794,0],["Ozpor",19.5,12.99,1],["Zedio",18.75,10.825,0],["Jetrich",14.25,10.825,0],["Kersanis",12.0,12.99,0],["Bernarc",11.25,2.165,0],["Cyhus",27.0,11.258,0],["Kotion",28.5,15.588,0],["Lolipupos",22.5,15.588,0],["Massa",23.25,19.486,0],["Mestu",22.5,23.383,0],["Qaqitarius",21.0,26.847,0],["Hydra",20.25,20.352,0],["Gem",16.5,19.919,0],["Spritium",15.75,22.95,0],["Gnus",14.25,25.548,0],["Hubble",18.0,26.847,2],["Cammlisam",15.75,30.744,0],["Molisam",10.5,27.713,0],["Eucatium",12.75,34.208,0],["Lar",8.25,30.744,0],["Kam",9.0,32.909,0],["Hum",7.5,35.507,0],["Lacpulalis",4.5,32.043,0],["Fordol",4.5,33.775,0],["Ballis",-0.75,32.476,0],["Meer",4.5,35.507,0],["Neo",1.5,34.641,0],["Wumtiys",1.5,38.105,2],["Garbridge",-4.5,34.641,2],["Cepeland",-0.75,35.94,0],["Lick",-1.5,38.971,0],["Pom",-4.5,37.239,0],["Eil",-4.5,31.177,0],["Eacaoum",-9.0,30.311,0]],"edges":[[72,73],[194,197],[10,34],[9,170],[50,52],[44,45],[99,100],[164,165],[125,128],[87,89],[8,9],[196,197],[100,101],[0,78],[132,133],[123,130],[120,122],[137,138],[175,177],[107,152],[98,149],[41,42],[70,112],[96,97],[18,19],[192,193],[81,96],[133,134],[14,15],[153,155],[166,167],[15,16],[47,48],[44,150],[42,43],[71,79],[73,76],[162,163],[134,135],[5,124],[127,129],[144,145],[182,184],[2,116],[48,49],[142,157],[80,81],[75,76],[85,86],[140,141],[195,196],[109,117],[183,185],[160,162],[177,178],[16,17],[81,82],[110,118],[59,61],[108,109],[118,119],[12,13],[173,174],[5,7],[22,23],[77,78],[12,22],[127,131],[103,106],[49,50],[38,169],[104,105],[13,14],[189,191],[45,46],[53,59],[55,56],[184,186],[24,151],[42,47],[90,96],[147,148],[163,166],[10,170],[142,143],[139,153],[23,24],[143,144],[66,68],[83,84],[97,101],[138,139],[19,20],[158,160],[175,176],[28,32],[166,173],[79,80],[72,74],[56,57],[3,115],[154,156],[171,172],[181,182],[20,21],[117,146],[128,146],[52,53],[190,194],[57,58],[112,113],[167,168],[89,90],[155,157],[187,189],[36,38],[53,54],[30,31],[65,83],[108,152],[25,26],[193,195],[188,190],[26,27],[86,87],[21,31],[7,105],[178,179],[60,150],[27,28],[93,147],[37,39],[54,55],[64,65],[119,120],[6,8],[136,145],[5,6],[14,18],[87,88],[35,169],[97,98],[130,132],[1,2],[106,110],[179,180],[8,136],[130,141],[20,46],[28,29],[107,148],[93,94],[148,149],[174,177],[120,121],[185,186],[194,198],[67,69],[29,30],[84,85],[165,171],[59,74],[103,107],[104,106],[159,161],[186,187],[2,3],[22,36],[122,123],[62,63],[94,95],[88,91],[25,151],[3,114],[154,155],[185,188],[20,75],[180,183],[191,192],[126,129],[121,124],[127,137],[31,41],[62,111],[91,92],[0,17],[34,168],[63,64],[71,77],[32,33],[4,115],[58,61],[59,60],[69,70],[61,66],[101,102],[99,114],[176,181],[0,1],[10,11],[82,116],[73,113],[198,199],[37,38],[92,93],[140,142],[102,103],[157,158],[109,118],[43,44],[4,7],[26,37],[18,33],[70,71],[125,126],[135,136],[39,40],[130,131],[161,164],[34,35],[65,68],[49,51],[11,12],[66,67],[172,173],[158,159],[40,185],[58,111]]},"elite137":{"nodes":[["Jkourpion",-16.5,7.794,0],["Gallisoto",-15.0,5.196,0],["Enceldus",-18.75,3.897,0],["Riton",-15.75,1.299,0],["Urhmdotune",-19.5,0.0,0],["Amnis",-16.5,-0.866,0],["Arrnux",-19.5,6.928,0],["Sara Major",-20.25,9.093,0],["Wcolys",-18.75,9.959,0],["Fedinan",-21.75,9.093,0],["Kagallen",-21.75,4.763,0],["Vvottuos",-24.75,3.031,0],["Ourenni",-24.75,0.433,0],["Megellnicx",-22.5,0.866,0],["Zabi",-22.5,-2.598,0],["Utotia",-24.0,-3.464,0],["Porpens",-22.5,-5.196,0],["Wziuicou",-21.0,-6.928,0],["Ringsanx",-24.75,-7.361,0],["Xhift",-15.0,-4.33,0],["Ngoium",-13.5,-2.598,0],["Larx",-15.75,-11.691,0],["Falye",-13.5,-12.124,0],["Hiela",-19.5,-11.258,0],["Hchwassrann",-24.75,-13.423,0],["Rolance",-26.25,-9.959,0],["Sekitio",-25.5,-18.187,0],["Bolevy",-21.75,-16.887,0],["Echectium",-22.5,-13.856,0],["Qangrend",-10.5,-8.66,0],["Jugscici",-16.5,-7.794,0],["Dysianima",-14.25,-7.361,0],["Phokos",-14.25,-15.155,0],["Deemza",-9.75,-15.155,0],["Tethyus",-6.75,-16.887,0],["Zione",-9.0,-20.785,0],["Gantfallis",-14.25,-19.486,0],["Reid",-18.0,-17.321,0],["Solos Polusis",-21.0,-21.651,0],["Mitis",-19.5,-20.785,0],["Qelraar",-18.75,-22.95,0],["Amajustum",-21.75,-25.548,0],["Oprion",-24.0,-21.651,0],["El'Surrium",-20.25,-27.28,0],["Lucekala",-16.5,-30.311,0],["Hlux",-14.25,-32.476,0],["Ferkeros",-13.5,-30.311,0],["Qysnmia",-15.75,-26.414,0],["Echswot",-10.5,-22.517,0],["Cetotuom",-6.0,-23.383,0],["Clustim",-4.5,-27.713,0],["Raonus",-6.75,-27.28,0],["Rxcodra",-9.75,-26.414,0],["Adim",-9.0,-29.445,0],["Formax",-6.75,-35.074,0],["Retirulum",-2.25,-18.62,0],["Eridani",1.5,-19.053,0],["Hupolis",-1.5,-24.249,0],["Euriga",-0.75,-27.28,0],["Canis",3.75,-27.28,0],["Vella",9.75,-23.816,0],["Vocans",9.75,-22.084,0],["Vulpecula",3.75,-15.155,0],["Hellum",6.75,-16.021,0],["Barbosa",11.25,-13.423,0],["Munimux",9.0,-11.258,0],["Rediux",13.5,-18.187,0],["Culcopii",12.0,-25.981,0],["Culae",15.0,-10.392,0],["Trianguilc",18.0,-16.454,0],["Laraculy",17.25,-9.093,0],["Ptcient",17.25,-11.691,0],["Lemy",15.75,-13.423,0],["Uranonetia",13.5,-7.794,0],["Dotman",18.75,-2.165,0],["Sobiescianum",19.5,-5.196,0],["Ceveulius",16.5,0.866,0],["Minor Pulis",23.25,-3.031,0],["Ponoceros",24.0,-7.794,0],["Octus",24.0,0.0,0],["Tulux",24.75,5.629,0],["Keyserium",22.5,9.526,0],["Risentum",18.75,2.165,0],["Plancios",13.5,6.928,0],["Falaille",8.25,12.557,0],["Norneen",15.0,9.526,0],["Nanisim",21.0,6.928,0],["Phextor",20.25,15.155,0],["Cuxtans",8.25,22.95,0],["Oerpens",15.0,18.187,0],["Piswoluz",16.5,13.856,0],["Qigasi",7.5,18.187,0],["Talumax",5.25,16.887,0],["Talumini",0.75,16.887,0],["Hynix",9.0,28.579,0],["Carlai",12.75,23.816,0],["Venaticici",0.75,23.816,0],["Parricos",0.0,26.847,0],["Berenices",4.5,25.981,0],["Bam",-6.0,19.919,0],["Lacernus",-3.0,17.321,0],["Ophces",-5.25,12.557,0],["Cane",-12.75,20.352,0],["Kane",-9.0,26.847,0],["Janislemy",-12.0,24.249,0],["Juddis",-15.0,25.115,0],["Jircini",-14.25,21.218,0],["Doroda",-20.25,18.62,0],["Korvus",-18.0,17.321,0],["Euorpolis",-23.25,12.557,0],["Muridani",-16.5,14.722,0],["Cygni",-12.75,12.557,0],["Curuphini",-9.75,13.423,0],["Karaille",-10.5,17.321,0],["Yeminorum",-1.5,19.919,0],["Iupi",-4.5,23.383,0],["Indritria",-3.75,29.012,0],["Iologii",3.75,21.218,0],["Leonistar",10.5,14.722,0],["Lyum",12.75,13.423,0],["Omens",9.75,9.959,0],["Micpane",19.5,11.258,0],["Lirae",14.25,2.165,1],["Jemini",28.5,4.33,0],["Porologium",13.5,-2.598,0],["Kaceta",15.0,-5.196,0],["Cadda",26.25,-2.165,1],["Feggoum",24.75,13.423,0],["Falom",23.25,18.62,0],["Fairattr",19.5,22.517,0],["Lar",20.25,20.352,0],["Eskolas",1.5,12.99,0],["Lpnius",6.0,12.99,0],["Gakkusanix",-9.75,9.093,0],["Benm",-11.25,3.897,0],["Mucs",-12.75,0.433,0],["Oritan",-11.25,-4.763,0],["Umenga",-7.5,-12.124,0],["Mayalium",-3.75,-13.423,0],["Quxpool",-0.75,-16.021,0],["Kanis",-13.5,-22.517,0],["Ragittarius",6.0,-34.641,0],["Hagellnic",7.5,-25.115,0],["Ceptania",6.75,-22.95,0],["Qill",3.75,-23.816,0],["Dasdum",21.0,-17.321,0],["Sallimote",24.0,-15.588,0],["Virgo",20.25,-12.557,0],["Tellameda",29.25,-14.289,0],["Jeticia",27.75,-7.361,0],["Parason",23.25,-11.691,0],["Eral",27.75,1.299,0],["Cumgunnia",25.5,9.526,0],["Ha'ki",27.75,15.155,0],["Dimmpanium",17.25,11.691,0],["Welniam",18.0,7.794,0],["Moda",17.25,4.763,0],["Orlan",12.0,19.919,0],["Skylett",12.0,16.454,0],["Seyfei",3.0,29.445,0],["Malin",-6.75,16.021,0],["Vegeo",-6.0,8.66,0],["Sessier",-12.0,6.928,0],["Ariangu",-15.75,11.691,0],["Nilx",13.5,4.33,0],["Zarh",24.75,2.165,0],["Ozpor",19.5,-21.651,1],["Zedio",23.25,-20.352,0],["Jetrich",9.75,-29.012,0],["Kersanis",6.75,-27.28,0],["Bernarc",-27.75,-0.433,0],["Cyhus",-25.5,6.928,0],["Kotion",-21.0,12.124,0],["Lolipupos",-15.0,16.454,0],["Massa",18.75,17.754,0],["Mestu",30.0,9.526,0],["Qaqitarius",27.0,-12.124,0],["Hydra",18.0,-19.053,0],["Gem",12.0,-16.454,0],["Spritium",8.25,-19.486,0],["Gnus",1.5,-25.115,0],["Hubble",-17.25,-14.289,2],["Cammlisam",-3.0,14.722,0],["Molisam",-0.75,29.012,0],["Eucatium",10.5,25.981,0],["Lar",10.5,6.928,0],["Kam",17.25,-4.763,0],["Hum",-0.75,-29.012,0],["Lacpulalis",-8.25,-24.682,0],["Fordol",0.0,-36.373,0],["Ballis",7.5,-12.99,0],["Meer",24.0,-5.196,0],["Neo",6.75,14.289,0],["Wumtiys",-18.0,14.722,2],["Garbridge",-3.75,-15.155,2],["Cepeland",21.75,2.165,0],["Lick",0.0,-32.043,0],["Pom",6.0,-31.177,0],["Eil",13.5,-20.785,0],["Eacaoum",15.0,-21.651,0]],"edges":[[143,179],[44,45],[99,100],[101,161],[55,139],[34,138],[85,119],[40,41],[7,172],[196,197],[66,69],[74,82],[152,175],[24,26],[41,42],[146,150],[69,177],[144,180],[81,87],[88,157],[90,154],[99,102],[124,186],[80,195],[70,75],[14,15],[9,10],[2,4],[17,23],[74,75],[122,124],[129,130],[5,30],[128,174],[131,182],[126,149],[111,112],[72,178],[166,167],[88,95],[107,108],[78,191],[59,187],[96,117],[79,165],[38,39],[80,81],[49,57],[100,160],[134,162],[89,157],[132,192],[15,18],[16,17],[71,72],[121,155],[123,152],[113,160],[108,173],[118,119],[99,115],[145,167],[76,122],[22,32],[104,105],[60,199],[69,147],[78,150],[1,3],[61,143],[114,115],[13,14],[84,120],[45,46],[80,165],[95,184],[55,56],[47,52],[50,51],[62,190],[64,68],[118,158],[101,160],[110,193],[142,143],[29,31],[83,185],[93,131],[66,178],[138,194],[52,188],[114,117],[19,20],[79,126],[12,170],[133,161],[187,196],[7,9],[24,25],[97,183],[87,127],[81,86],[147,150],[37,181],[52,53],[25,170],[85,120],[4,13],[57,58],[2,6],[30,31],[153,175],[96,98],[145,146],[48,140],[76,156],[139,194],[29,136],[26,27],[116,183],[125,186],[156,164],[21,22],[3,135],[35,48],[23,28],[106,108],[27,28],[110,172],[64,65],[102,113],[83,164],[20,135],[60,61],[18,25],[38,40],[177,198],[4,17],[103,105],[97,98],[19,136],[11,13],[148,149],[73,125],[45,54],[85,154],[111,173],[56,63],[8,163],[120,185],[100,182],[148,176],[9,171],[94,184],[92,132],[168,197],[51,188],[87,90],[104,106],[113,173],[0,6],[5,20],[33,137],[65,190],[150,176],[127,153],[62,63],[88,91],[94,159],[86,121],[91,117],[154,155],[41,43],[151,165],[77,191],[26,42],[66,179],[0,8],[36,37],[91,92],[1,134],[87,174],[133,162],[76,82],[109,171],[112,133],[128,129],[54,189],[166,177],[123,151],[58,180],[107,109],[141,196],[60,67],[36,140],[47,140],[46,53],[22,31],[59,142],[36,39],[159,183],[92,93],[68,71],[91,158],[198,199],[16,18],[29,137],[33,34],[84,192],[43,44],[141,189],[89,130],[21,23],[77,195],[70,71],[35,49],[50,187],[32,181],[59,144],[10,13],[173,193],[11,12],[103,116],[111,163],[68,73],[49,188],[67,169],[168,169],[7,8]]}};
 
 const CLUSTERS = {
-  standard: { name: 'Pillars of Creation', type: 'standard' },
-  elite135: { name: 'Elite Cluster α', type: 'elite' },
-  elite136: { name: 'Elite Cluster β', type: 'elite' },
-  elite137: { name: 'Elite Cluster γ', type: 'elite' }
+  standard: { name: 'Elite Galaxy', type: 'elite' },
+  elite135: { name: 'Standard A', type: 'standard' },
+  elite136: { name: 'Standard B', type: 'standard' },
+  elite137: { name: 'Standard C', type: 'standard' }
 };
 
 let currentMap = 'standard';
 let selectedNode = null;
 let camera = { x: 0, y: 0, scale: 7 };
 let dragging = false, lastMouse = null;
+let pathFrom = null, pathTo = null, pathResult = [];
 let filteredNodes = [];
 let activeLayer = 'all';
 
@@ -585,7 +726,7 @@ const ctx = canvas.getContext('2d');
 
 function getNodes() { return (RAW[currentMap] || RAW.standard).nodes; }
 function getEdges() { return (RAW[currentMap] || RAW.standard).edges; }
-function isElite() { return CLUSTERS[currentMap].type === 'elite'; }
+function isElite() { return currentMap === 'standard'; } // 'standard' key = Elite Galaxy map
 
 function toScreen(wx, wz) {
   const cx = canvas.width / 2 + camera.x;
@@ -642,71 +783,15 @@ function draw() {
   const nodes = getNodes();
   const edges = getEdges();
   const elite = isElite();
-  const nodeColor = elite ? '#ff8c00' : '#00c8ff';
-  const edgeColor = elite ? 'rgba(255,140,0,0.18)' : 'rgba(0,180,255,0.18)';
+  const nodeColor = '#00c8ff'; // all maps use same blue color
+  const edgeColor = 'rgba(0,180,255,0.18)';
 
-  // Build col,row -> node map for edges
-  const nodeMap = {};
-  nodes.forEach(n => { nodeMap[`${n[0]}_${n[1]}_${n[2]}`] = n; });
-  const colRowMap = {};
-  nodes.forEach(n => {
-    // We need col,row from the original data — but compact format only has name,x,z,layer,idx
-    // Edge data uses col,row coordinates so we need to reconstruct
-    // Actually edges store col,row pairs from original XML — let's skip drawing edges
-    // and just show nodes for now (edges would need col,row in compact)
-  });
-
-  // Draw edges using the edge data which stores col,row
-  // We need to match col,row to x,z positions
-  // Since we removed col,row from compact format, let's rebuild from x using hex grid math
-  // x = col * 0.75 * unitSize, z = (row + col*0.5) * sin60 * unitSize where unitSize=1.5
-  // From the data: x = col * 0.75, z = (row + col/2) * sin(60deg) ≈ row*0.866 + col*0.433
-  // Actually: x = col * 0.75, z = (row + col*0.5) * sqrt(3)/2
-  // Let's verify: col=17, row=-6 -> x=12.75 ✓, z = (-6 + 8.5)*0.866 = 2.5*0.866 = 2.165... no
-  // Let's try: z = row * sqrt(3)/2 + col * sqrt(3)/4
-  // col=17,row=-6: z = -6*0.866 + 17*0.433 = -5.196 + 7.361 = 2.165... original is -4.763
-  // Actually from hex: x = col * 0.75, z = -(row * sqrt3/2 + col * sqrt3/4)... let's reverse
-  // z = -4.763, col=17: if z = row * h where h depends on col... 
-  // Let's just find col,row -> x,z mapping from our data
-  // Build reverse map from nodes
-  const crToXZ = {};
-  // We'll need to re-load data with col/row - for now draw just nodes
-
-  // Draw connections by finding edges between named nodes
-  // Since edges are col,row pairs, try to match to our nodes by reconstructing
-  // x ≈ col*0.75, z ≈ ... let's skip edges if col/row not available
-  // Actually the RAW data has edges as col pairs - let's try hex formula
-  // From node 100_1_0: col=17,row=-6, x=12.75, z=-4.76314
-  // x = col * 0.75 => 17*0.75=12.75 ✓
-  // z = (row - col/2) * sqrt(3)/2 => (-6 - 8.5) * 0.866 = -14.5*0.866 = -12.56 ✗
-  // z = row * sqrt(3)/2 + col * ... let me try z formula from just row:
-  // if col=0: z = row * h, need: col=0,row=-2 -> z=-1.732 => h=0.866 (sqrt3/2) ✓
-  // col=22,row=0 -> z=0 ✓. col=17,row=-6 -> z=? 
-  // Hex: z = (row + col*0.5) * sqrt(3)/2 ... (−6+8.5)*0.866=2.5*0.866=2.165 ✗
-  // Or: z = row * 0.866 - ... no
-  // Let me just use brute: x=col*0.75 always true. For z:
-  // row=-6, col=17, z=-4.763
-  // z = row*0.866 + offset. -6*0.866=-5.196. offset=0.433 => col*0.433/17=0.433 => const 0.433
-  // That would be: z = row*0.866 + 0.433 which doesn't scale with col
-  // Try: z = row * sqrt(3)/2 + col * sqrt(3)/4
-  // col=17,row=-6: -6*0.866 + 17*0.433 = -5.196+7.361=2.165 ✗ z should be -4.763
-  // Hmm: col=22,row=0 -> z=0. col=9,row=-1 -> z should be? Let me check node 9_-1:
-  // Node 100_4_3: col=12,row=3, x=9, z=2.598. x=12*0.75=9 ✓
-  // z=2.598. row*0.866=2.598 -> purely row based? 3*0.866=2.598 ✓!
-  // col=17,row=-6: z=-6*0.866=-5.196 but actual=-4.763. Hmm discrepancy.
-  // Maybe z = (row - col%2 * 0.5) * 0.866? col=17 odd: z=(-6-0.5)*0.866=-5.63 ✗
-  // It might be a pointy-top hex: z = row * sqrt(3) + col * sqrt(3)/2 / sqrt(3)?
-  // Just use node positions directly without drawing edges for simplicity
-
-  // Draw simple line edges using x,z from nodes matched by col,row
-  // Build map from (col,row) to (x,z) using actual node data
-  // We need to add col,row back to the compact format or use a full dataset
-  // Let's skip edges for the compact format and just show nodes — the visualization is still useful
+  // Edges drawn via drawEdges() using node x,z positions
 
   // Draw glowing center
   const center = toScreen(0, 0);
   const grad = ctx.createRadialGradient(center.x, center.y, 0, center.x, center.y, camera.scale * 8);
-  grad.addColorStop(0, elite ? 'rgba(255,140,0,0.08)' : 'rgba(0,180,255,0.08)');
+  grad.addColorStop(0, 'rgba(0,180,255,0.08)');
   grad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = grad;
   ctx.beginPath();
@@ -781,7 +866,7 @@ function draw() {
       // Normal glow
       const glowR = isSelected ? 16 : 10;
       const glow = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, glowR);
-      glow.addColorStop(0, isSelected ? 'rgba(255,255,255,0.4)' : (elite ? 'rgba(255,140,0,0.25)' : 'rgba(0,200,255,0.25)'));
+      glow.addColorStop(0, isSelected ? 'rgba(255,255,255,0.4)' : 'rgba(0,200,255,0.25)');
       glow.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = glow;
       ctx.beginPath();
@@ -808,17 +893,19 @@ function draw() {
     // Label
     if (camera.scale > 8) {
       ctx.font = isSelected ? '500 11px Orbitron, monospace' : '10px Share Tech Mono, monospace';
-      ctx.fillStyle = isSelected ? '#ffffff' : (elite ? 'rgba(255,160,40,0.85)' : 'rgba(100,200,255,0.85)');
+      ctx.fillStyle = isSelected ? '#ffffff' : 'rgba(100,200,255,0.85)';
       ctx.textAlign = 'center';
       ctx.fillText(name, pos.x, pos.y - r - 4);
     } else if (camera.scale > 5) {
       ctx.font = '9px Share Tech Mono, monospace';
-      ctx.fillStyle = elite ? 'rgba(255,160,40,0.6)' : 'rgba(100,200,255,0.6)';
+      ctx.fillStyle = 'rgba(100,200,255,0.6)';
       ctx.textAlign = 'center';
       ctx.fillText(name, pos.x, pos.y - r - 3);
     }
   });
 
+  // Draw path
+  drawPath();
   // Draw buildings on top of nodes
   drawBuildings();
 }
@@ -841,19 +928,24 @@ function buildList() {
     const div = document.createElement('div');
     div.className = 'sys-item';
     if (selectedNode && selectedNode[0] === name && selectedNode[1] === wx && selectedNode[2] === wz) {
-      div.className += elite ? ' selected-elite' : ' selected';
+      div.className += ' selected';
     }
     const starType = n[3];
     const isBH = starType === 1;
     const isNS = starType === 2;
     div.innerHTML = `
-      <div class="sys-dot ${elite ? 'dot-elite' : 'dot-std'}" style="${isBH ? 'background:#6600cc;box-shadow:0 0 6px #9933ff' : isNS ? 'background:#00ffee;box-shadow:0 0 6px #00ffee' : ''}"></div>
+      <div class="sys-dot dot-std" style="${isBH ? 'background:#6600cc;box-shadow:0 0 6px #9933ff' : isNS ? 'background:#00ffee;box-shadow:0 0 6px #00ffee' : ''}"></div>
       <div class="sys-name" style="${isBH ? 'color:#bb88ff' : isNS ? 'color:#00ffee' : ''}">${name}${isBH ? ' ●' : isNS ? ' ◆' : ''}</div>
     `;
-    div.onclick = () => {
-      selectNode(n);
-      // Scroll info panel into view
-      document.getElementById('info-panel').scrollIntoView({behavior:'smooth', block:'nearest'});
+    div.onclick = (e) => {
+      if (e.shiftKey) {
+        setPathTo(n);
+      } else if (e.ctrlKey || e.metaKey) {
+        setPathFrom(n);
+      } else {
+        selectNode(n);
+        document.getElementById('info-panel').scrollIntoView({behavior:'smooth', block:'nearest'});
+      }
     };
     list.appendChild(div);
   });
@@ -867,14 +959,14 @@ function buildLayerTabs() {
   tabs.innerHTML = '';
 
   const allTab = document.createElement('button');
-  allTab.className = `ctab ${activeLayer === 'all' ? (elite ? 'active-elite' : 'active-std') : ''}`;
+  allTab.className = `ctab ${activeLayer === 'all' ? 'active-std' : ''}`;
   allTab.textContent = 'All';
   allTab.onclick = () => { activeLayer = 'all'; buildLayerTabs(); buildList(); draw(); };
   tabs.appendChild(allTab);
 
   layers.forEach(l => {
     const b = document.createElement('button');
-    b.className = `ctab ${activeLayer == l ? (elite ? 'active-elite' : 'active-std') : ''}`;
+    b.className = `ctab ${activeLayer == l ? 'active-std' : ''}`;
     b.textContent = `Layer ${l}`;
     b.onclick = () => { activeLayer = String(l); buildLayerTabs(); buildList(); draw(); };
     tabs.appendChild(b);
@@ -889,11 +981,11 @@ function selectNode(n) {
   const starType = isBH; // reuse param as starType (0/1/2)
   const isBHFlag = starType === 1;
   const isNSFlag = starType === 2;
-  const starLabel = isBHFlag ? '● Black Hole' : isNSFlag ? '◆ Neutron Star' : elite ? '⬡ Elite System' : '◆ Standard System';
+  const starLabel = isBHFlag ? '● Black Hole' : isNSFlag ? '◆ Neutron Star' : '◆ System';
   const starColor = isBHFlag ? '#bb88ff' : isNSFlag ? '#00ffee' : '';
   const blocked = isBHFlag || isNSFlag;
   document.getElementById('info-panel').innerHTML = `
-    <div class="info-title ${elite ? 'elite' : ''}" style="${starColor ? 'color:'+starColor : ''}">${name}</div>
+    <div class="info-title" style="${starColor ? 'color:'+starColor : ''}">${name}</div>
     <div class="info-row"><span class="info-label">Type</span><span class="info-val" style="${starColor ? 'color:'+starColor : ''}">${starLabel}</span></div>
     <div class="info-row"><span class="info-label">Cluster</span><span class="info-val">${CLUSTERS[currentMap].name}</span></div>
     ${blocked ? '<div class="info-row" style="color:#ff8844;font-size:10px">⚠ No buildings allowed</div>' : ''}
@@ -919,7 +1011,7 @@ function switchMap(mapId) {
 
   const clusterName = document.getElementById('cluster-name');
   clusterName.textContent = CLUSTERS[mapId].name;
-  clusterName.className = `badge-name ${elite ? 'elite' : 'std'}`;
+  clusterName.className = elite ? 'badge-name elite' : 'badge-name std';
 
   const nodes = getNodes();
   document.getElementById('node-count').textContent = `${nodes.filter(n => !n[0].startsWith('Node ')).length} named / ${nodes.length} systems`;
@@ -982,9 +1074,9 @@ canvas.addEventListener('mousemove', e => {
     tt.style.left = (mx + 12) + 'px';
     tt.style.top = (my - 10) + 'px';
     document.getElementById('tt-name').textContent = closest[0];
-    document.getElementById('tt-name').className = `tooltip-name ${elite ? 'elite' : ''}`;
+    document.getElementById('tt-name').className = 'tooltip-name';
     document.getElementById('tt-pos').textContent = `x: ${closest[1].toFixed(2)}  z: ${closest[2].toFixed(2)}`;
-    document.getElementById('tt-layer').textContent = `x: ${closest[1].toFixed(2)}  z: ${closest[2].toFixed(2)}`;
+    const _st = closest[3]; document.getElementById('tt-layer').textContent = _st === 1 ? '● Black Hole' : _st === 2 ? '◆ Neutron Star' : '◆ System';
   } else {
     tt.style.display = 'none';
   }
@@ -1005,8 +1097,46 @@ canvas.addEventListener('click', e => {
     return;
   }
 
-  // Left click on canvas: deselect current node
-  if (selectedNode) {
+  // Left click: check if near a building marker (15px), or deselect
+  if (selectedAllianceId) {
+    const rect2 = canvas.getBoundingClientRect();
+    const mx2 = e.clientX - rect2.left, my2 = e.clientY - rect2.top;
+    const alliance = getSelectedAlliance();
+    let hit = false;
+    if (alliance) {
+      // Check HQ
+      const clickMb = getMapBuildings(alliance);
+      if (clickMb.hq) {
+        const hp = toScreen(clickMb.hq.x, clickMb.hq.z);
+        if (Math.hypot(mx2 - hp.x, my2 - hp.y) < 14) {
+          // Click on HQ → set HQ mode and sync slider to current rank
+          setMode('hq');
+          document.getElementById('hq-rank').value = getMapBuildings(alliance).hq?.rank ?? 1;
+          updateRankDisplay('hq');
+          hit = true;
+        }
+      }
+      // Check outposts
+      if (!hit) {
+        for (const op of clickMb.outposts) {
+          const op2 = toScreen(op.x, op.z);
+          if (Math.hypot(mx2 - op2.x, my2 - op2.y) < 14) {
+            setMode('op');
+            document.getElementById('op-rank').value = op.rank;
+            updateRankDisplay('op');
+            hit = true;
+            break;
+          }
+        }
+      }
+    }
+    if (!hit && selectedNode) {
+      selectedNode = null;
+      document.getElementById('info-panel').innerHTML = '<div class="info-empty">Select a system to view details</div>';
+      buildList();
+      draw();
+    }
+  } else if (selectedNode) {
     selectedNode = null;
     document.getElementById('info-panel').innerHTML = '<div class="info-empty">Select a system to view details</div>';
     buildList();
@@ -1068,7 +1198,12 @@ window.addEventListener('keydown', e => {
 // ====== INFLUENCE SYSTEM ======
 const HQ_INF = {1:500,2:550,3:600,4:650,5:700,6:750,7:800,8:850,9:900,10:950,11:1000,12:1050,13:1100,14:1150,15:1200,16:1250,17:1300,18:1350,19:1400,20:1500};
 const OP_INF = {1:300,2:325,3:350,4:375,5:400,6:425,7:450,8:475,9:500,10:525,11:550,12:575,13:600,14:625,15:650,16:675,17:700,18:725,19:750,20:800};
-const INF_RADIUS = 7.5;  // Canis->Hellum distance — same for HQ and OP
+const INF_MIN = 5.5;   // rank 1 minimum range
+const INF_MAX = 7.5;   // max rank influence
+function infToRadius(rank) {
+  // Linear interpolation: rank 1 → INF_MIN, rank 20 → INF_MAX
+  return INF_MIN + (INF_MAX - INF_MIN) * (rank - 1) / 19;
+}
 // Neutron stars encoded in data as n[3]===2, black holes as n[3]===1
 
 const ALLIANCE_COLORS = [
@@ -1076,7 +1211,13 @@ const ALLIANCE_COLORS = [
   '#4080e8','#8040e0','#e040b0','#60b860','#a0785c'
 ];
 
-let alliances = []; // [{id, name, color, hq:{sysId, rank, x, z}|null, outposts:[{sysId, rank, x, z}]}]
+let alliances = []; // [{id, name, color, maps: {standard:{hq,outposts}, elite135:{hq,outposts}, ...}}]
+function getMapBuildings(alliance, mapId) {
+  if (!mapId) mapId = currentMap;
+  if (!alliance.maps) alliance.maps = {};
+  if (!alliance.maps[mapId]) alliance.maps[mapId] = { hq: null, outposts: [] };
+  return alliance.maps[mapId];
+}
 let placeMode = null; // 'hq' | 'op' | 'rm' | null
 let selectedAllianceId = null;
 let selectedColor = ALLIANCE_COLORS[0];
@@ -1133,8 +1274,7 @@ function addAlliance() {
     id: allianceCounter,
     name,
     color: selectedColor,
-    hq: null,
-    outposts: []
+    maps: {}
   });
   nameInput.value = '';
   selectedAllianceId = allianceCounter;
@@ -1170,8 +1310,9 @@ function renderAllianceList() {
     const div = document.createElement('div');
     div.className = 'alliance-row';
     div.style.borderLeft = a.id === selectedAllianceId ? `2px solid ${a.color}` : '2px solid transparent';
-    const opCount = a.outposts.length;
-    const hqRank = a.hq ? a.hq.rank : '—';
+    const mb = getMapBuildings(a);
+    const opCount = mb.outposts.length;
+    const hqRank = mb.hq ? mb.hq.rank : '—';
     div.innerHTML = `
       <div class="alliance-name-row">
         <div class="alliance-dot" style="background:${a.color}"></div>
@@ -1179,7 +1320,7 @@ function renderAllianceList() {
         <span class="alliance-del" onclick="deleteAlliance(${a.id})">✕</span>
       </div>
       <div class="alliance-stats">
-        <span class="alliance-stat"><span class="hq-icon">⬡</span> HQ R${hqRank} ${a.hq ? '@ ' + a.hq.sysName : 'none'}</span>
+        <span class="alliance-stat"><span class="hq-icon">⬡</span> HQ R${hqRank} ${mb.hq ? '@ ' + mb.hq.sysName : 'none'}</span>
         <span class="alliance-stat"><span class="op-icon">◈</span> ${opCount}/10 Outpost${opCount !== 1 ? 's' : ''}</span>
       </div>
     `;
@@ -1206,15 +1347,13 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-function infToRadius() {
-  return INF_RADIUS;
-}
+
 
 function drawEdges() {
   const nodes = getNodes();
   const edges = getEdges();
   const elite = isElite();
-  const edgeColor = elite ? 'rgba(255,140,0,0.22)' : 'rgba(100,180,255,0.22)';
+  const edgeColor = 'rgba(100,180,255,0.22)';
 
   ctx.strokeStyle = edgeColor;
   ctx.lineWidth = 0.8;
@@ -1233,10 +1372,11 @@ function drawInfluence() {
   if (alliances.length === 0) return;
   
   alliances.forEach(a => {
+    const mb = getMapBuildings(a);
     // Draw outpost zones (behind HQ zone)
-    a.outposts.forEach(op => {
+    mb.outposts.forEach(op => {
       const pos = toScreen(op.x, op.z);
-      const r = infToRadius() * camera.scale; // outpost radius
+      const r = infToRadius(op.rank) * camera.scale;
       const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, r);
       grad.addColorStop(0, hexToRgba(a.color, 0.20));
       grad.addColorStop(0.6, hexToRgba(a.color, 0.12));
@@ -1256,9 +1396,9 @@ function drawInfluence() {
     });
 
     // Draw HQ zone (on top)
-    if (a.hq) {
-      const pos = toScreen(a.hq.x, a.hq.z);
-      const r = infToRadius() * camera.scale; // HQ radius
+    if (mb.hq) {
+      const pos = toScreen(mb.hq.x, mb.hq.z);
+      const r = infToRadius(mb.hq.rank) * camera.scale;
       const grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, r);
       grad.addColorStop(0, hexToRgba(a.color, 0.30));
       grad.addColorStop(0.5, hexToRgba(a.color, 0.18));
@@ -1279,8 +1419,9 @@ function drawInfluence() {
 
 function drawBuildings() {
   alliances.forEach(a => {
+    const mb = getMapBuildings(a);
     // Draw outpost markers
-    a.outposts.forEach(op => {
+    mb.outposts.forEach(op => {
       const pos = toScreen(op.x, op.z);
       // Outer ring
       ctx.strokeStyle = a.color;
@@ -1310,8 +1451,8 @@ function drawBuildings() {
     });
 
     // Draw HQ marker
-    if (a.hq) {
-      const pos = toScreen(a.hq.x, a.hq.z);
+    if (mb.hq) {
+      const pos = toScreen(mb.hq.x, mb.hq.z);
       // Hexagon shape
       ctx.strokeStyle = a.color;
       ctx.lineWidth = 2.5;
@@ -1341,19 +1482,32 @@ function drawBuildings() {
         if (camera.scale > 6) {
           ctx.font = '8px Share Tech Mono, monospace';
           ctx.fillStyle = a.color;
-          ctx.fillText(a.name, pos.x, pos.y + 20);
+          ctx.fillText(a.name, pos.x, pos.y + 20); // HQ label
           ctx.fillStyle = 'rgba(255,215,0,0.8)';
-          ctx.fillText(`R${a.hq.rank}`, pos.x, pos.y + 29);
+          ctx.fillText(`R${mb.hq.rank}`, pos.x, pos.y + 29);
         }
       }
     }
   });
 }
 
+
+function updateRankDisplay(type) {
+  const rank = parseInt(document.getElementById(type + '-rank').value);
+  const radius = INF_MIN + (INF_MAX - INF_MIN) * (rank - 1) / 19;
+  document.getElementById(type + '-rank-val').textContent = rank;
+  document.getElementById(type + '-radius-val').textContent = 'r=' + radius.toFixed(1);
+  // Redraw if a building of this type is being previewed
+  if (placeMode === type || (type === 'hq' && placeMode === 'hq') || (type === 'op' && placeMode === 'op')) {
+    draw();
+  }
+}
+
 function systemOccupied(sysName) {
   return alliances.some(a => {
-    if (a.hq && a.hq.sysName === sysName) return true;
-    return a.outposts.some(o => o.sysName === sysName);
+    const mb = getMapBuildings(a);
+    if (mb.hq && mb.hq.sysName === sysName) return true;
+    return mb.outposts.some(o => o.sysName === sysName);
   });
 }
 
@@ -1380,15 +1534,16 @@ function handleInfluenceClick(worldX, worldZ) {
   const alliance = getSelectedAlliance();
   const sysName = closest[0];
   const x = closest[1], z = closest[2];
+  const mb = getMapBuildings(alliance);
 
   if (placeMode === 'hq') {
     const hqRank = parseInt(document.getElementById('hq-rank').value);
     // Only 1 HQ per alliance
     if (closest[3] === 1) { showHint('⚠ Trou noir : impossible de construire ici !'); return false; }
     if (closest[3] === 2) { showHint('⚠ Neutron Star: cannot build here!'); return false; }
-    if (alliance.hq) { showHint('⚠ This alliance already has a HQ! Remove it first.'); return false; }
+    if (mb.hq) { showHint('⚠ This alliance already has a HQ! Remove it first.'); return false; }
     if (systemOccupied(sysName)) { showHint('⚠ A building already exists on this system!'); return false; }
-    alliance.hq = { sysName, x, z, rank: hqRank };
+    mb.hq = { sysName, x, z, rank: hqRank };
     renderAllianceList();
     draw();
     return true;
@@ -1398,22 +1553,22 @@ function handleInfluenceClick(worldX, worldZ) {
     // Max 10 outposts per alliance
     if (closest[3] === 1) { showHint('⚠ Trou noir : impossible de construire ici !'); return false; }
     if (closest[3] === 2) { showHint('⚠ Neutron Star: cannot build here!'); return false; }
-    if (alliance.outposts.length >= 10) { showHint('⚠ Max 10 Outposts per alliance!'); return false; }
+    if (mb.outposts.length >= 10) { showHint('⚠ Max 10 Outposts per alliance!'); return false; }
     if (systemOccupied(sysName)) { showHint('⚠ A building already exists on this system!'); return false; }
-    alliance.outposts.push({ sysName, x, z, rank: opRank });
+    mb.outposts.push({ sysName, x, z, rank: opRank });
     renderAllianceList();
     draw();
     return true;
 
   } else if (placeMode === 'rm') {
-    // Remove any building on this system for selected alliance
-    if (alliance.hq && alliance.hq.sysName === sysName) {
-      alliance.hq = null;
+    const rmb = getMapBuildings(alliance);
+    if (rmb.hq && rmb.hq.sysName === sysName) {
+      rmb.hq = null;
       renderAllianceList(); draw(); return true;
     }
-    const opIdx = alliance.outposts.findIndex(o => o.sysName === sysName);
+    const opIdx = rmb.outposts.findIndex(o => o.sysName === sysName);
     if (opIdx !== -1) {
-      alliance.outposts.splice(opIdx, 1);
+      rmb.outposts.splice(opIdx, 1);
       renderAllianceList(); draw(); return true;
     }
     showHint('⚠ No building found here for this alliance');
@@ -1442,6 +1597,387 @@ renderAllianceList();
 // Init
 switchMap('standard');
 resize();
+
+
+// ── MOBILE ──
+let currentDrawerTab = null;
+
+function isMobile() { return window.innerWidth <= 700; }
+
+function mobTab(tab) {
+  if (!isMobile()) return;
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('mob-' + tab).classList.add('active');
+
+  if (tab === 'map') {
+    closeDrawer();
+    currentDrawerTab = null;
+    return;
+  }
+
+  currentDrawerTab = tab;
+  const drawer = document.getElementById('drawer');
+  const content = document.getElementById('drawer-content');
+
+  if (tab === 'systems') {
+    // Clone sidebar system list + search + info panel
+    const searchHtml = `<div style="padding:8px 12px 4px"><input type="text" placeholder="Search system..." oninput="buildMobList()" id="mob-search" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Share Tech Mono,monospace;font-size:12px;padding:6px 10px;border-radius:4px;outline:none"></div>`;
+    const listHtml = `<div id="mob-sys-list" style="max-height:35vh;overflow-y:auto;scrollbar-width:thin"></div>`;
+    const infoHtml = `<div id="mob-info-panel" style="padding:12px 14px;border-top:1px solid var(--border);min-height:80px"><div class="info-empty">Select a system</div></div>`;
+    content.innerHTML = searchHtml + listHtml + infoHtml;
+    buildMobList();
+  } else if (tab === 'influence') {
+    // Clone influence panel
+    const sidebar = document.querySelector('.influence-panel');
+    content.innerHTML = `<div style="padding:0 0 8px">${sidebar ? sidebar.innerHTML : ''}</div>`;
+    // Re-bind events on cloned elements
+    const sel = content.querySelector('#sel-alliance');
+    if (sel) sel.onchange = selectAlliance;
+    content.querySelectorAll('[onclick]').forEach(el => {
+      const fn = el.getAttribute('onclick');
+      el.onclick = () => eval(fn);
+    });
+    content.querySelectorAll('input[type=range]').forEach(el => {
+      el.oninput = () => updateRankDisplay(el.id.replace('-rank',''));
+    });
+    content.querySelectorAll('input[type=text]').forEach(el => {
+      if (el.id === 'new-alliance-name') el.id = 'mob-new-alliance-name';
+    });
+    const addBtn = content.querySelector('.add-btn');
+    if (addBtn) addBtn.onclick = () => {
+      const inp = content.querySelector('#mob-new-alliance-name') || content.querySelector('#new-alliance-name');
+      const mainInp = document.getElementById('new-alliance-name');
+      if (mainInp && inp) mainInp.value = inp.value;
+      addAlliance();
+      inp.value = '';
+    };
+    // Sync selects
+    const mainSel = document.getElementById('sel-alliance');
+    if (sel && mainSel) sel.innerHTML = mainSel.innerHTML;
+  }
+
+  drawer.classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+}
+
+function buildMobList() {
+  const listEl = document.getElementById('mob-sys-list');
+  if (!listEl) return;
+  const searchEl = document.getElementById('mob-search');
+  const q = searchEl ? searchEl.value.toLowerCase() : '';
+  const nodes = getNodes();
+  const filtered = nodes.filter(n => n[0].toLowerCase().includes(q));
+  listEl.innerHTML = '';
+  filtered.forEach(n => {
+    const [name, wx, wz, starType] = n;
+    const isBH = starType === 1, isNS = starType === 2;
+    const div = document.createElement('div');
+    div.className = 'sys-item';
+    if (selectedNode && selectedNode[0] === name) div.className += ' selected';
+    div.innerHTML = `<div class="sys-dot dot-std" style="${isBH?'background:#6600cc;box-shadow:0 0 6px #9933ff':isNS?'background:#00ffee;box-shadow:0 0 6px #00ffee':''}"></div><div class="sys-name" style="${isBH?'color:#bb88ff':isNS?'color:#00ffee':''}">${name}${isBH?' ●':isNS?' ◆':''}</div>`;
+    div.onclick = () => {
+      selectNode(n);
+      const infoEl = document.getElementById('mob-info-panel');
+      if (infoEl) infoEl.innerHTML = document.getElementById('info-panel').innerHTML;
+    };
+    listEl.appendChild(div);
+  });
+}
+
+// Touch tap on canvas for mobile influence placement
+canvas.addEventListener('touchend', e => {
+  dragging = false;
+  touchDist = null;
+  if (placeMode && e.changedTouches.length === 1) {
+    const t = e.changedTouches[0];
+    const rect = canvas.getBoundingClientRect();
+    const mx = t.clientX - rect.left, my = t.clientY - rect.top;
+    const world = toWorld(mx, my);
+    handleInfluenceClick(world.x, world.z);
+  }
+});
+
+
+
+// ── EXPORT / IMPORT ──
+function showToast(msg, color) {
+  const t = document.getElementById('ei-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.style.color = color || 'var(--accent)';
+  t.style.opacity = '1';
+  setTimeout(() => { t.style.opacity = '0'; }, 2500);
+}
+
+function exportData() {
+  const payload = {
+    version: 1,
+    map: currentMap,
+    alliances: alliances.map(a => ({
+      id: a.id,
+      name: a.name,
+      color: a.color,
+      maps: a.maps || {}
+    })),
+    allianceCounter
+  };
+  const txt = JSON.stringify(payload);
+  document.getElementById('ei-textarea').value = txt;
+  document.getElementById('ei-modal').style.display = 'flex';
+  document.getElementById('ei-title').textContent = 'Export — copy this text';
+  document.getElementById('ei-textarea').readOnly = true;
+  document.getElementById('ei-textarea').select();
+  document.getElementById('ei-import-btn').style.display = 'none';
+  document.getElementById('ei-copy-btn').style.display = 'inline-block';
+}
+
+function openImport() {
+  document.getElementById('ei-textarea').value = '';
+  document.getElementById('ei-textarea').readOnly = false;
+  document.getElementById('ei-modal').style.display = 'flex';
+  document.getElementById('ei-title').textContent = 'Import — paste your text';
+  document.getElementById('ei-import-btn').style.display = 'inline-block';
+  document.getElementById('ei-copy-btn').style.display = 'none';
+  document.getElementById('ei-textarea').focus();
+}
+
+function closeEiModal() {
+  document.getElementById('ei-modal').style.display = 'none';
+}
+
+function copyExport() {
+  const ta = document.getElementById('ei-textarea');
+  ta.select();
+  try {
+    navigator.clipboard.writeText(ta.value).then(() => showToast('✓ Copied!'));
+  } catch(e) {
+    document.execCommand('copy');
+    showToast('✓ Copied!');
+  }
+}
+
+function doImport() {
+  const txt = document.getElementById('ei-textarea').value.trim();
+  if (!txt) { showToast('✗ Empty — paste data first', '#ff4444'); return; }
+  try {
+    const data = JSON.parse(txt);
+    if (!data.version || !Array.isArray(data.alliances)) {
+      showToast('✗ Invalid format', '#ff4444'); return;
+    }
+    if (alliances.length > 0 && !confirm('Replace current ' + alliances.length + ' alliance(s) with ' + data.alliances.length + ' imported?')) return;
+    alliances = data.alliances.map(a => ({ id: a.id, name: a.name, color: a.color, maps: a.maps || {} }));
+    allianceCounter = data.allianceCounter || Math.max(0, ...alliances.map(a => a.id));
+    selectedAllianceId = alliances.length > 0 ? alliances[0].id : null;
+    if (data.map && data.map !== currentMap) switchMap(data.map);
+    else { refreshAllianceSelector(); renderAllianceList(); draw(); }
+    closeEiModal();
+    showToast('✓ Imported ' + alliances.length + ' alliance(s)');
+  } catch(err) {
+    showToast('✗ Parse error: ' + err.message.slice(0,30), '#ff4444');
+  }
+}
+
+
+// ── PATHFINDING ──
+
+function buildAdjacency() {
+  const nodes = getNodes();
+  const edges = getEdges();
+  const adj = Array.from({length: nodes.length}, () => []);
+  edges.forEach(([a, b]) => { adj[a].push(b); adj[b].push(a); });
+  return adj;
+}
+
+function bfsPath(fromIdx, toIdx) {
+  const nodes = getNodes();
+  if (fromIdx === toIdx) return [fromIdx];
+  const adj = buildAdjacency();
+  const visited = new Array(nodes.length).fill(false);
+  const parent = new Array(nodes.length).fill(-1);
+  const queue = [fromIdx];
+  visited[fromIdx] = true;
+  while (queue.length > 0) {
+    const cur = queue.shift();
+    if (cur === toIdx) break;
+    for (const nb of adj[cur]) {
+      if (!visited[nb]) {
+        visited[nb] = true;
+        parent[nb] = cur;
+        queue.push(nb);
+      }
+    }
+  }
+  if (!visited[toIdx]) return null; // no path
+  const path = [];
+  let cur = toIdx;
+  while (cur !== -1) { path.unshift(cur); cur = parent[cur]; }
+  return path;
+}
+
+function findNodeIndex(name) {
+  const nodes = getNodes();
+  return nodes.findIndex(n => n[0] === name);
+}
+
+function setPathFrom(n) {
+  pathFrom = n;
+  pathTo = null;
+  pathResult = [];
+  updatePathUI();
+  draw();
+}
+
+function setPathTo(n) {
+  pathTo = n;
+  if (pathFrom && pathTo) {
+    const fi = findNodeIndex(pathFrom[0]);
+    const ti = findNodeIndex(pathTo[0]);
+    if (fi !== -1 && ti !== -1) {
+      const path = bfsPath(fi, ti);
+      pathResult = path || [];
+      updatePathUI();
+    }
+  }
+  draw();
+}
+
+function clearPath() {
+  pathFrom = null; pathTo = null; pathResult = [];
+  updatePathUI();
+  document.getElementById('path-from-label').textContent = '—';
+  document.getElementById('path-to-label').textContent = '—';
+  draw();
+}
+
+function updatePathUI() {
+  const fromEl = document.getElementById('path-from-label');
+  const toEl = document.getElementById('path-to-label');
+  const lenEl = document.getElementById('path-length');
+  const listEl = document.getElementById('path-list');
+  if (fromEl && pathFrom) fromEl.textContent = pathFrom[0];
+  if (toEl && pathTo) toEl.textContent = pathTo[0];
+  if (lenEl) {
+    if (pathResult.length > 0) {
+      lenEl.textContent = (pathResult.length - 1) + ' jump(s)';
+    } else if (pathFrom && pathTo) {
+      lenEl.textContent = 'No path found';
+    } else {
+      lenEl.textContent = '';
+    }
+  }
+  if (listEl && pathResult.length > 0) {
+    const nodes = getNodes();
+    listEl.innerHTML = pathResult.map((idx, i) => {
+      const n = nodes[idx];
+      return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0">' +
+        '<span style="color:var(--text3);font-size:9px;min-width:14px">' + i + '</span>' +
+        '<span style="font-size:11px;color:' + (i === 0 ? '#40cc80' : i === pathResult.length-1 ? '#ff8844' : 'var(--text)') + '">' + n[0] + '</span>' +
+        '</div>';
+    }).join('');
+  } else if (listEl) {
+    listEl.innerHTML = '';
+  }
+}
+
+function drawPath() {
+  if (pathResult.length < 2) {
+    // Just highlight endpoints
+    const nodes = getNodes();
+    if (pathFrom) {
+      const pos = toScreen(pathFrom[1], pathFrom[2]);
+      ctx.strokeStyle = '#40cc80';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 10, 0, Math.PI*2);
+      ctx.stroke();
+    }
+    if (pathTo) {
+      const pos = toScreen(pathTo[1], pathTo[2]);
+      ctx.strokeStyle = '#ff8844';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 10, 0, Math.PI*2);
+      ctx.stroke();
+    }
+    return;
+  }
+  const nodes = getNodes();
+  // Draw path lines
+  ctx.strokeStyle = '#ffdd44';
+  ctx.lineWidth = 2.5;
+  ctx.setLineDash([6, 3]);
+  ctx.beginPath();
+  pathResult.forEach((idx, i) => {
+    const n = nodes[idx];
+    const pos = toScreen(n[1], n[2]);
+    if (i === 0) ctx.moveTo(pos.x, pos.y);
+    else ctx.lineTo(pos.x, pos.y);
+  });
+  ctx.stroke();
+  ctx.setLineDash([]);
+  // Highlight nodes
+  pathResult.forEach((idx, i) => {
+    const n = nodes[idx];
+    const pos = toScreen(n[1], n[2]);
+    const isEnd = i === 0 || i === pathResult.length - 1;
+    ctx.strokeStyle = i === 0 ? '#40cc80' : i === pathResult.length-1 ? '#ff8844' : '#ffdd44';
+    ctx.lineWidth = isEnd ? 2.5 : 1.5;
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, isEnd ? 10 : 7, 0, Math.PI*2);
+    ctx.stroke();
+    if (camera.scale > 5 && isEnd) {
+      ctx.font = '9px Orbitron,monospace';
+      ctx.fillStyle = i === 0 ? '#40cc80' : '#ff8844';
+      ctx.textAlign = 'center';
+      ctx.fillText(i === 0 ? 'FROM' : 'TO', pos.x, pos.y - 14);
+    }
+  });
+}
 </script>
+
+<!-- Mobile bottom bar -->
+<div id="mobile-bar">
+  <button class="mob-btn active" id="mob-map" onclick="mobTab('map')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="4 2"/></svg>
+    Map
+  </button>
+  <button class="mob-btn" id="mob-systems" onclick="mobTab('systems')">
+    <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="12" y2="18"/></svg>
+    Systems
+  </button>
+  <button class="mob-btn" id="mob-influence" onclick="mobTab('influence')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+    Influence
+  </button>
+</div>
+
+<!-- Mobile drawer -->
+<div id="drawer">
+  <div class="drawer-handle" onclick="closeDrawer()"></div>
+  <div id="drawer-content"></div>
+</div>
+
+
+<!-- Export/Import modal -->
+<div id="ei-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--panel);border:1px solid var(--border2);border-radius:6px;width:100%;max-width:520px;padding:16px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span id="ei-title" style="font-family:Orbitron,monospace;font-size:12px;color:var(--accent);letter-spacing:1px">Export</span>
+      <button onclick="closeEiModal()" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;line-height:1">×</button>
+    </div>
+    <textarea id="ei-textarea" rows="8" spellcheck="false"
+      style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:Share Tech Mono,monospace;font-size:10px;padding:8px;border-radius:4px;resize:vertical;outline:none;box-sizing:border-box"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
+      <span id="ei-toast" style="flex:1;font-size:11px;font-family:Share Tech Mono,monospace;opacity:0;transition:opacity 0.3s;color:var(--accent)"></span>
+      <button id="ei-copy-btn" class="add-btn" onclick="copyExport()">Copy</button>
+      <button id="ei-import-btn" class="add-btn" onclick="doImport()">Import</button>
+      <button class="add-btn" onclick="closeEiModal()" style="color:var(--text3)">Cancel</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
